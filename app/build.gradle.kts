@@ -68,8 +68,15 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx) // For Kotlin Coroutines and Flow support
     ksp(libs.androidx.room.compiler)
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:3.0.0") // Or the latest version
+    // Gson converter (or your preferred converter)
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0") // Or the latest version
+
 
 }
