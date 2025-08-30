@@ -2,7 +2,7 @@ package com.example.transcore.di
 
 import com.example.transcore.BuildConfig
 import com.example.transcore.data.api.TranslateApiService
-import com.example.transcore.data.repository.TranslateRepository
+import com.example.transcore.domain.repos.TranslateRepository
 import com.example.transcore.data.repository.TranslateRepositoryImpl
 import dagger.Module
 import dagger.Provides

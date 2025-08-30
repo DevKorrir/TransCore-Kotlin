@@ -83,6 +83,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
     // Gson converter (or your preferred converter)
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.1.0")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.57.1")
@@ -90,6 +91,9 @@ dependencies {
 
     // Hilt Navigation Compose (recommended for Compose + Hilt)
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+    //logs
+    implementation("com.jakewharton.timber:timber:5.0.1")
 
 
 }

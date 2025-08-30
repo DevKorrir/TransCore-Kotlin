@@ -1,4 +1,4 @@
-package com.example.transcore.data.repository
+package com.example.transcore.domain.repos
 
 import com.example.transcore.data.models.Language
 import com.example.transcore.data.models.TranslationResult
@@ -11,4 +11,3 @@ interface TranslateRepository {
         targetLanguage: String
     ): Result<TranslationResult>
 }
-

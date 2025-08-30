@@ -4,6 +4,7 @@ import com.example.transcore.data.api.TranslateApiService
 import com.example.transcore.data.models.TranslateRequest
 import com.example.transcore.data.models.TranslationResult
 import com.example.transcore.data.models.Language
+import com.example.transcore.domain.repos.TranslateRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
