@@ -20,6 +20,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "TRANSLATE_API_KEY", getApiKey("TRANSLATE_API_KEY"))
+        buildConfigField("String", "TRANSLATE_BASE_URL", getApiKey("TRANSLATE_BASE_URL"))
     }
 
     buildTypes {
@@ -39,6 +42,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
