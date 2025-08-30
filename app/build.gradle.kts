@@ -1,7 +1,11 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -39,6 +43,13 @@ android {
     }
 }
 
+fun getApiKey(propertyKey: String): String {
+    val properties = Properties()
+    val file = project.rootProject.file("keys.properties")
+    properties.load(FileInputStream(file))
+    return "\"${properties.getProperty(propertyKey)}\""
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -56,4 +67,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx) // For Kotlin Coroutines and Flow support
+    ksp(libs.androidx.room.compiler)
+
 }
