@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -78,9 +80,16 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:3.0.0") // Or the latest version
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
     // Gson converter (or your preferred converter)
-    implementation("com.squareup.retrofit2:converter-gson:3.0.0") // Or the latest version
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.57.1")
+    ksp("com.google.dagger:hilt-compiler:2.57.1")
+
+    // Hilt Navigation Compose (recommended for Compose + Hilt)
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
 
 }
