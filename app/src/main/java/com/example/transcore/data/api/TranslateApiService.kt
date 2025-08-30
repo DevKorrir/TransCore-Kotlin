@@ -2,6 +2,7 @@ package com.example.transcore.data.api
 
 import com.example.transcore.BuildConfig
 import com.example.transcore.data.models.Language
+import com.example.transcore.data.models.LanguagesResponse
 import com.example.transcore.data.models.TranslateRequest
 import com.example.transcore.data.models.TranslateResponse
 import retrofit2.http.Body
