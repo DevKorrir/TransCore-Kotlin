@@ -7,7 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface TranslateApi {
+interface TranslateApiService {
     @POST("translate")
     suspend fun translate(
         @Body request: TranslateRequest
