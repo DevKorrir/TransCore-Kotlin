@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TransCore">
         <activity
-            android:name=".MainActivity"
+            android:name=".apllication.activity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.TransCore">

@@ -1,4 +1,4 @@
-package com.example.transcore.ui.theme
+package com.example.transcore.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
