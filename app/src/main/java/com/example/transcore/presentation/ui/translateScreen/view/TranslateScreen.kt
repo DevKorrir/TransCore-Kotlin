@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.transcore.presentation.ui.history.viewModel.HistoryViewModel
 import com.example.transcore.presentation.ui.translateScreen.componets.ActionButtonsRow
 import com.example.transcore.presentation.ui.translateScreen.componets.LanguageSelectionRow
 import com.example.transcore.presentation.ui.translateScreen.componets.TransCoreHeader
@@ -36,6 +37,7 @@ import com.example.transcore.presentation.viewModel.TranslatorViewModel
 fun TranslateScreen(
     modifier: Modifier = Modifier,
     viewModel: TranslatorViewModel = hiltViewModel(),
+    historyViewModel: HistoryViewModel = hiltViewModel(),
     onHistoryClick: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -103,7 +105,19 @@ fun TranslateScreen(
                 hasText = uiState.sourceText.isNotBlank(),
                 hasTranslation = uiState.translatedText.isNotBlank(),
                 isLoading = uiState.isLoading,
-                onTranslate = { viewModel.translateText() },
+                onTranslate = {
+                    viewModel.translateText()
+                    historyViewModel.save(
+                        item = com.example.transcore.presentation.ui.history.domain.model.TranslationHistory(
+                            id = 0,
+                            sourceText = uiState.sourceText,
+                            translatedText = uiState.translatedText,
+                            sourceLang = uiState.sourceLanguage.name,
+                            targetLang = uiState.targetLanguage.name,
+                            timestamp = System.currentTimeMillis()
+                        )
+                    )
+                              },
                 onClear = viewModel::clearText,
                 onCopy = {
                     clipboardManager.setText(AnnotatedString(uiState.translatedText))

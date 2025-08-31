@@ -24,8 +24,23 @@ class HistoryViewModel @Inject constructor(
         )
 
     fun save(item: TranslationHistory) {
-        viewModelScope.launch { repo.saveHistory(item) }
+        viewModelScope.launch {
+            repo.saveHistory(item)
+        }
     }
+
+//    fun saveTranslation(original: String, translated: String) {
+//        viewModelScope.launch {
+//            repo.saveHistory(
+//                TranslationHistory(
+//                    originalText = original,
+//                    translatedText = translated,
+//                    timestamp = System.currentTimeMillis()
+//                )
+//            )
+//        }
+//    }
+
 
     fun delete(item: TranslationHistory) {
         viewModelScope.launch { repo.deleteHistory(item) }

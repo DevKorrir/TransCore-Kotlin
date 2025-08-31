@@ -27,11 +27,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.transcore.presentation.ui.history.viewModel.HistoryViewModel
+import java.text.DateFormat
+import java.util.Date
 
 @Composable
 fun HistoryScreen(
     onBackClick: () -> Unit,
-    historyViewModel: HistoryViewModel = hiltViewModel()
+    historyViewModel: HistoryViewModel = hiltViewModel(),
 ) {
     val history by historyViewModel.history.collectAsState()
 
@@ -64,15 +66,11 @@ fun HistoryScreen(
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Column(Modifier.padding(12.dp)) {
-                        Text(item.sourceText, style = MaterialTheme.typography.bodyLarge)
+                        Text("Original: ${item.sourceText}")
+                        Text("Translated: ${item.translatedText}")
                         Text(
-                            item.translatedText,
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            "${item.sourceLang} → ${item.targetLang}",
-                            style = MaterialTheme.typography.labelSmall
+                            "At: ${DateFormat.getDateTimeInstance().format(Date(item.timestamp))}",
+                            style = MaterialTheme.typography.bodySmall
                         )
                     }
                 }

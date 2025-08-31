@@ -30,6 +30,9 @@ class TranslatorViewModel @Inject constructor(
     
     // For real-time translation with debouncing
     private val textChangeFlow = MutableSharedFlow<String>()
+
+    private val _translationResult = MutableStateFlow<String?>(null)
+    val translationResult: StateFlow<String?> = _translationResult
     
     init {
         loadLanguages()
@@ -94,7 +97,28 @@ class TranslatorViewModel @Inject constructor(
             )
         }
     }
-    
+
+
+//    fun translateAndSave(text: String, source: String, target: String) {
+//        viewModelScope.launch {
+//            // Call your existing translation API
+//            val result = repoApi.translateText(text, source, target)
+//
+//            result.onSuccess { translation ->
+//                _translationResult.value = translation.translatedText
+//
+//                // Save into history
+//                val entity = TranslationEntity(
+//                    originalText = text,
+//                    translatedText = translation.translatedText,
+//                    sourceLang = source,
+//                    targetLang = target,
+//                    timestamp = System.currentTimeMillis()
+//                )
+//                repo.saveTranslation(entity)
+//            }
+//        }
+//    }
     fun swapLanguages() {
         val currentState = _uiState.value
         if (currentState.sourceLanguage.code != "auto") {
