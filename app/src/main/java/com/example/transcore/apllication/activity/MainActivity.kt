@@ -1,4 +1,4 @@
-package com.example.transcore
+package com.example.transcore.apllication.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,18 +11,29 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.transcore.ui.theme.TransCoreTheme
+import androidx.navigation.compose.rememberNavController
+import com.example.transcore.presentation.navigation.NavGraph
+import com.example.transcore.presentation.theme.TransCoreTheme
+import com.example.transcore.presentation.ui.translateScreen.view.TranslateScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
+
             TransCoreTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                Scaffold(
+
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) { innerPadding ->
+                    NavGraph(
+                        modifier = Modifier.padding(innerPadding),
+                        navController = navController
                     )
                 }
             }
