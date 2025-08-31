@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun TransCoreHeader() {
+fun TransCoreHeader(
+    onHistoryClick: () -> Unit = {}
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -37,25 +41,43 @@ fun TransCoreHeader() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp),
-            horizontalArrangement = Arrangement.Center,
+                .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                imageVector = Icons.Default.Translate,
-                contentDescription = null,
-                modifier = Modifier.size(32.dp),
-                tint = MaterialTheme.colorScheme.onPrimaryContainer
-            )
-            Spacer(modifier = Modifier.width(12.dp))
-            Text(
-                text = "TransCore",
-                style = MaterialTheme.typography.headlineMedium.copy(
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 1.2.sp
-                ),
-                color = MaterialTheme.colorScheme.onPrimaryContainer
-            )
+            // Left Spacer for balance
+            Spacer(modifier = Modifier.width(32.dp))
+
+            // Centered Branding
+            Row(
+                modifier = Modifier.weight(1f),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Translate,
+                    contentDescription = null,
+                    modifier = Modifier.size(32.dp),
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+                Spacer(modifier = Modifier.width(12.dp))
+                Text(
+                    text = "TransCore",
+                    style = MaterialTheme.typography.headlineMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 1.2.sp
+                    ),
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
+
+            // History Icon on the right
+            IconButton(onClick = onHistoryClick) {
+                Icon(
+                    imageVector = Icons.Default.History,
+                    contentDescription = "History",
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
         }
     }
 }
