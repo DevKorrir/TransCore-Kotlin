@@ -117,7 +117,7 @@ fun ActionButtonsRow(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            "Translate",
+                            "Save&Translate",
                             style = MaterialTheme.typography.labelLarge.copy(
                                 fontWeight = FontWeight.SemiBold
                             )

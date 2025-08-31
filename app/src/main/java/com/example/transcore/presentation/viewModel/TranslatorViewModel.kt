@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.transcore.data.models.Language
 import com.example.transcore.domain.usecases.GetLanguagesUseCase
 import com.example.transcore.domain.usecases.TranslateTextUseCase
+import com.example.transcore.presentation.ui.history.domain.model.TranslationHistory
+import com.example.transcore.presentation.ui.history.viewModel.HistoryViewModel
 import com.example.transcore.presentation.uiState.TranslatorUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -99,26 +101,25 @@ class TranslatorViewModel @Inject constructor(
     }
 
 
-//    fun translateAndSave(text: String, source: String, target: String) {
-//        viewModelScope.launch {
-//            // Call your existing translation API
-//            val result = repoApi.translateText(text, source, target)
-//
-//            result.onSuccess { translation ->
-//                _translationResult.value = translation.translatedText
-//
-//                // Save into history
-//                val entity = TranslationEntity(
-//                    originalText = text,
-//                    translatedText = translation.translatedText,
-//                    sourceLang = source,
-//                    targetLang = target,
-//                    timestamp = System.currentTimeMillis()
-//                )
-//                repo.saveTranslation(entity)
-//            }
-//        }
-//    }
+
+    fun translateTextAndSave(historyViewModel: HistoryViewModel) {
+        viewModelScope.launch {
+            translateText() // call your existing translation logic
+            if (uiState.value.translatedText.isNotBlank()) {
+                historyViewModel.save(
+                    TranslationHistory(
+                        id = 0,
+                        sourceText = uiState.value.sourceText,
+                        translatedText = uiState.value.translatedText,
+                        sourceLang = uiState.value.sourceLanguage.name,
+                        targetLang = uiState.value.targetLanguage.name,
+                        timestamp = System.currentTimeMillis()
+                    )
+                )
+            }
+        }
+    }
+
     fun swapLanguages() {
         val currentState = _uiState.value
         if (currentState.sourceLanguage.code != "auto") {

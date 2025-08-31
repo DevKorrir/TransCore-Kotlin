@@ -106,18 +106,8 @@ fun TranslateScreen(
                 hasTranslation = uiState.translatedText.isNotBlank(),
                 isLoading = uiState.isLoading,
                 onTranslate = {
-                    viewModel.translateText()
-                    historyViewModel.save(
-                        item = com.example.transcore.presentation.ui.history.domain.model.TranslationHistory(
-                            id = 0,
-                            sourceText = uiState.sourceText,
-                            translatedText = uiState.translatedText,
-                            sourceLang = uiState.sourceLanguage.name,
-                            targetLang = uiState.targetLanguage.name,
-                            timestamp = System.currentTimeMillis()
-                        )
-                    )
-                              },
+                    viewModel.translateTextAndSave(historyViewModel)
+                },
                 onClear = viewModel::clearText,
                 onCopy = {
                     clipboardManager.setText(AnnotatedString(uiState.translatedText))
