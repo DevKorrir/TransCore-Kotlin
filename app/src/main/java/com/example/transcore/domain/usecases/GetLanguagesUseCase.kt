@@ -7,7 +7,9 @@ import javax.inject.Inject
 class GetLanguagesUseCase @Inject constructor(
     private val repository: TranslateRepository
 ) {
-    suspend operator fun invoke(): Result<List<Language>> {
+    suspend operator fun invoke(
+        target: String = "en"
+    ): Result<List<Language>> {
         return repository.getLanguages()
     }
 }
