@@ -33,6 +33,7 @@ import com.example.transcore.presentation.viewModel.TranslatorViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TranslateScreen(
+    modifier: Modifier = Modifier,
     viewModel: TranslatorViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -50,7 +51,7 @@ fun TranslateScreen(
     )
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(

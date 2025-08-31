@@ -22,8 +22,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TransCoreTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TranslateScreen()
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) { innerPadding ->
+                    TranslateScreen(
+                        modifier = Modifier.
+                        padding(innerPadding)
+                    )
                 }
             }
         }
