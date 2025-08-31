@@ -74,13 +74,10 @@ fun TranslateScreen(
 
             // Language Selection Row
             LanguageSelectionRow(
-                sourceLanguage = uiState.sourceLanguage,
-                targetLanguage = uiState.targetLanguage,
+                uiState = uiState,
                 onSourceLanguageSelected = viewModel::selectSourceLanguage,
                 onTargetLanguageSelected = viewModel::selectTargetLanguage,
                 onSwapLanguages = viewModel::swapLanguages,
-                swapRotation = swapRotation,
-                availableLanguages = uiState.availableLanguages
             )
 
             // Translation Cards

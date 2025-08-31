@@ -26,31 +26,51 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.transcore.data.models.Language
+import com.example.transcore.presentation.uiState.TranslatorUiState
 import com.example.transcore.presentation.viewModel.TranslatorViewModel
 
 @Composable
 fun LanguageSelectionRow(
-    sourceLanguage: Language,
-    targetLanguage: Language,
     onSourceLanguageSelected: (Language) -> Unit,
     onTargetLanguageSelected: (Language) -> Unit,
     onSwapLanguages: () -> Unit,
-    swapRotation: Float,
-    availableLanguages: List<Language>,
-    viewModel: TranslatorViewModel = hiltViewModel()
+    viewModel: TranslatorViewModel = hiltViewModel(),
+    uiState: TranslatorUiState
 ) {
+
+    var showSourceSheet by remember { mutableStateOf(false) }
+    var showTargetSheet by remember { mutableStateOf(false) }
+
+    val swapRotation = if (uiState.sourceLanguage == uiState.targetLanguage) 180f else 0f
     var showSheet by remember { mutableStateOf(false) }
     val uiState by viewModel.uiState.collectAsState()
 
-    if (showSheet) {
+    // Bottom Sheets
+    if (showSourceSheet) {
         LanguageBottomSheet(
             languages = uiState.availableLanguages,
-            selectedLanguage = uiState.sourceLanguage, // or target
-            onLanguageSelected = viewModel::selectSourceLanguage,
-            onDismiss = { showSheet = false }
+            selectedLanguage = uiState.sourceLanguage,
+            onLanguageSelected = {
+                onSourceLanguageSelected(it)
+                showSourceSheet = false
+            },
+            onDismiss = { showSourceSheet = false }
         )
     }
 
+    if (showTargetSheet) {
+        LanguageBottomSheet(
+            languages = uiState.availableLanguages,
+            selectedLanguage = uiState.targetLanguage,
+            onLanguageSelected = {
+                onTargetLanguageSelected(it)
+                showTargetSheet = false
+            },
+            onDismiss = { showTargetSheet = false }
+        )
+    }
+
+    //row
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,7 +90,7 @@ fun LanguageSelectionRow(
             // Source Language
             LanguageChip(
                 language = uiState.sourceLanguage,
-                onClick = { showSheet = true },
+                onClick = { showSourceSheet = true },
                 modifier = Modifier.weight(1f)
             )
 
@@ -93,7 +113,7 @@ fun LanguageSelectionRow(
             // Target Language
             LanguageChip(
                 language = uiState.targetLanguage,
-                onClick = { showSheet = true },
+                onClick = { showTargetSheet = true },
                 modifier = Modifier.weight(1f)
             )
         }
