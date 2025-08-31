@@ -35,7 +35,8 @@ import com.example.transcore.presentation.viewModel.TranslatorViewModel
 @Composable
 fun TranslateScreen(
     modifier: Modifier = Modifier,
-    viewModel: TranslatorViewModel = hiltViewModel()
+    viewModel: TranslatorViewModel = hiltViewModel(),
+    onHistoryClick: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val clipboardManager = LocalClipboardManager.current
@@ -71,7 +72,9 @@ fun TranslateScreen(
         ) {
 
             // Header with App Branding
-            TransCoreHeader()
+            TransCoreHeader(
+                onHistoryClick = onHistoryClick
+            )
 
             // Language Selection Row
             LanguageSelectionRow(

@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.transcore.presentation.ui.history.view.HistoryScreen
+import com.example.transcore.presentation.ui.translateScreen.view.TranslateScreen
 
 @Composable
 fun NavGraph(
@@ -14,10 +15,11 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
+        modifier = modifier,
         startDestination = "home"
     ) {
         composable("home") {
-            HomeScreen(
+            TranslateScreen(
                 onHistoryClick = { navController.navigate("history") }
             )
         }
