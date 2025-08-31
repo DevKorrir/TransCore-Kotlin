@@ -9,7 +9,7 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface TranslateApiService {
-    @POST("translate")
+    @POST("language/translate/v2")
     suspend fun translate(
         @Query("key") apiKey: String = BuildConfig.TRANSLATE_API_KEY,
         @Body request: TranslateRequest

@@ -64,6 +64,7 @@ class TranslatorViewModel @Inject constructor(
         if (text.isBlank()) return
         
         viewModelScope.launch {
+            Timber.tag("TranslatorViewModel").d("Starting Translating text: $text")
             _uiState.value = _uiState.value.copy(
                 isLoading = true,
                 error = null
@@ -75,6 +76,8 @@ class TranslatorViewModel @Inject constructor(
                 targetLanguage = _uiState.value.targetLanguage.code
             ).fold(
                 onSuccess = { result ->
+                    Timber.tag("TranslatorViewModel").d("Translation success: $result")
+
                     _uiState.value = _uiState.value.copy(
                         translatedText = result.translatedText,
                         isLoading = false,
