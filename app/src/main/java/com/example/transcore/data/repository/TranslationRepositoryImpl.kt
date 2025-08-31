@@ -30,25 +30,23 @@ class TranslateRepositoryImpl @Inject constructor(
         Timber.tag("TranslateRepo").d("Translating: $text from $sourceLanguage to $targetLanguage")
 
         // Detect if user passed "auto" or empty source
-        val finalSource = if (sourceLanguage.isBlank() || sourceLanguage == "auto") {
+        val finalSource = sourceLanguage.ifBlank {
             val detectResp = apiService.detectLanguage(text = text)
             val detected = detectResp.data.detections.firstOrNull()
-                ?.firstOrNull()?.language.orEmpty()
+                ?.firstOrNull()
+                ?.language ?: "en"
             Timber.tag("TranslateRepo").d("Detected source language: $detected")
-            detected
-        } else {
-            sourceLanguage
         }
 
         // Translate using the source (detected or provided)
         val translateRequestBody = TranslateRequest(
             q = text,
-            source = finalSource,
+            source = finalSource as String,
             target = targetLanguage,
         )
         val response = apiService.translate(
             request = translateRequestBody,
-            apiKey = BuildConfig.TRANSLATE_API_KEY,
+            //apiKey = BuildConfig.TRANSLATE_API_KEY,
         )
         Timber.tag("TranslateRepo").d("API response: $response")
 

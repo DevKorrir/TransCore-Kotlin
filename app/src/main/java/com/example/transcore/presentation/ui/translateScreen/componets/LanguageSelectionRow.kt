@@ -34,16 +34,14 @@ fun LanguageSelectionRow(
     onSourceLanguageSelected: (Language) -> Unit,
     onTargetLanguageSelected: (Language) -> Unit,
     onSwapLanguages: () -> Unit,
-    viewModel: TranslatorViewModel = hiltViewModel(),
-    uiState: TranslatorUiState
+    uiState: TranslatorUiState,
+    swapRotation: Float,
 ) {
 
     var showSourceSheet by remember { mutableStateOf(false) }
     var showTargetSheet by remember { mutableStateOf(false) }
 
-    val swapRotation = if (uiState.sourceLanguage == uiState.targetLanguage) 180f else 0f
-    var showSheet by remember { mutableStateOf(false) }
-    val uiState by viewModel.uiState.collectAsState()
+    val swapRotation = swapRotation
 
     // Bottom Sheets
     if (showSourceSheet) {

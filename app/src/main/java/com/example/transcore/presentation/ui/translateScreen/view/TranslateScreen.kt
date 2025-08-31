@@ -1,5 +1,6 @@
 package com.example.transcore.presentation.ui.translateScreen.view
 
+import android.widget.Toast
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloatAsState
@@ -78,6 +79,7 @@ fun TranslateScreen(
                 onSourceLanguageSelected = viewModel::selectSourceLanguage,
                 onTargetLanguageSelected = viewModel::selectTargetLanguage,
                 onSwapLanguages = viewModel::swapLanguages,
+                swapRotation = swapRotation
             )
 
             // Translation Cards
@@ -109,7 +111,7 @@ fun TranslateScreen(
         // Error Snackbar
         uiState.error?.let { error ->
             LaunchedEffect(error) {
-                // Show snackbar for errors
+                Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
             }
         }
     }

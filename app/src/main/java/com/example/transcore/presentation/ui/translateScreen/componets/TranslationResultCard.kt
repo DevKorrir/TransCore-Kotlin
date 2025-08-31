@@ -45,7 +45,7 @@ fun TranslationResultCard(
         modifier = Modifier
             .fillMaxWidth()
             .height(160.dp)
-            .shadow(3.dp, RoundedCornerShape(16.dp)),
+            .shadow(0.dp, RoundedCornerShape(16.dp)),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
