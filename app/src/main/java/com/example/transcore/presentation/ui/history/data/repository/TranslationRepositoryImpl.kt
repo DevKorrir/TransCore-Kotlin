@@ -1,5 +1,16 @@
 package com.example.transcore.presentation.ui.history.data.repository
 
+import com.example.transcore.presentation.ui.history.data.dao.TranslationHistoryDao
+import com.example.transcore.presentation.ui.history.domain.mapper.toDomain
+import com.example.transcore.presentation.ui.history.domain.mapper.toEntity
+import com.example.transcore.presentation.ui.history.domain.model.TranslationHistory
+import com.example.transcore.presentation.ui.history.domain.repo.TranslationRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
 class TranslationRepositoryImpl @Inject constructor(
     private val historyDao: TranslationHistoryDao
 ) : TranslationRepository {

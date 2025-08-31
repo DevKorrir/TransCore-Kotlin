@@ -30,3 +30,5 @@ object AppModule {
         dao: TranslationHistoryDao
     ): TranslationRepositoryImpl = TranslationRepositoryImpl(dao)
 }
+
+
