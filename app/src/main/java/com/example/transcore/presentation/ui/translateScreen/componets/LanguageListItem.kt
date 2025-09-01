@@ -31,7 +31,9 @@ fun LanguageListItem(
 ) {
     val currentLocale = Locale.getDefault()
     val displayName = try {
-        Locale(language.code).getDisplayLanguage(currentLocale)
+        Locale(language.code).getDisplayLanguage(currentLocale).replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(currentLocale) else it.toString()
+        }
     } catch (e: Exception) {
         language.name // kafallback
     }

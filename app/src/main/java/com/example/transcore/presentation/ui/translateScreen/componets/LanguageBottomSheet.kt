@@ -61,7 +61,9 @@ fun LanguageBottomSheet(
         languages.sortedBy { lang ->
             try {
                 //do generate the localized dispaly name in device language
-                Locale(lang.code).getDisplayLanguage(currentLocale)
+                Locale(lang.code).getDisplayLanguage(currentLocale).replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(currentLocale) else it.toString()
+                }
             } catch (e: Exception) {
                 lang.name //fall back
             }
@@ -74,7 +76,9 @@ fun LanguageBottomSheet(
         } else {
             sortedLanguages.filter { language ->
                 val localizedName = try {
-                    Locale(language.code).getDisplayLanguage(currentLocale)
+                    Locale(language.code).getDisplayLanguage(currentLocale).replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase(currentLocale) else it.toString()
+                    }
                 } catch (e: Exception) {
                     language.name
                 }
