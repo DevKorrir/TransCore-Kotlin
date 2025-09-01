@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.transcore.data.models.Language
+import java.util.Locale
 
 @Composable
 fun LanguageListItem(
@@ -28,6 +29,15 @@ fun LanguageListItem(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
+    val currentLocale = Locale.getDefault()
+    val displayName = try {
+        Locale.forLanguageTag(language.code).getDisplayLanguage(currentLocale).replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(currentLocale) else it.toString()
+        }
+    } catch (e: Exception) {
+        language.name // kafallback
+    }
+
     Surface(
         onClick = onClick,
         modifier = Modifier
@@ -37,21 +47,23 @@ fun LanguageListItem(
         color = if (isSelected) {
             MaterialTheme.colorScheme.primaryContainer
         } else {
-            Color.Transparent
-        }
+            MaterialTheme.colorScheme.surfaceContainerLow
+        },
+        shadowElevation = if (isSelected) 4.dp else 1.dp,
+        tonalElevation = if (isSelected) 8.dp else 2.dp
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(horizontal = 20.dp, vertical = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column {
                 Text(
-                    text = language.name,
+                    text = displayName,
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal
+                        fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Medium
                     ),
                     color = if (isSelected) {
                         MaterialTheme.colorScheme.onPrimaryContainer
@@ -60,26 +72,35 @@ fun LanguageListItem(
                     }
                 )
 
-                language.nativeName?.takeIf { it != language.name }?.let { native ->
+                language.nativeName?.takeIf { it != displayName }?.let { native ->
                     Text(
                         text = native,
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = if (isSelected) {
-                            MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
+                            MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
                         } else {
-                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-                        }
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                        },
+                        modifier = Modifier.padding(top = 2.dp)
                     )
                 }
             }
 
             if (isSelected) {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = "Selected",
-                    modifier = Modifier.size(24.dp),
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
-                )
+                Surface(
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier.size(32.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = "Selected",
+                        modifier = Modifier
+                            .size(18.dp)
+                            .padding(7.dp),
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
             }
         }
     }
