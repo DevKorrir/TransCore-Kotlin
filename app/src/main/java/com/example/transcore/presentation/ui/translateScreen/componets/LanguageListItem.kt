@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.transcore.data.models.Language
+import java.util.Locale
 
 @Composable
 fun LanguageListItem(
@@ -28,6 +29,13 @@ fun LanguageListItem(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
+    val currentLocale = Locale.getDefault()
+    val displayName = try {
+        Locale(language.code).getDisplayLanguage(currentLocale)
+    } catch (e: Exception) {
+        language.name // kafallback
+    }
+
     Surface(
         onClick = onClick,
         modifier = Modifier
@@ -51,7 +59,7 @@ fun LanguageListItem(
         ) {
             Column {
                 Text(
-                    text = language.name,
+                    text = displayName,
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Medium
                     ),
@@ -62,7 +70,7 @@ fun LanguageListItem(
                     }
                 )
 
-                language.nativeName?.takeIf { it != language.name }?.let { native ->
+                language.nativeName?.takeIf { it != displayName }?.let { native ->
                     Text(
                         text = native,
                         style = MaterialTheme.typography.bodyMedium,

@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.transcore.data.models.Language
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,18 +53,35 @@ fun LanguageBottomSheet(
 
     val lazyListState = rememberLazyListState()
 
+    //to sort languages with device language first
+    val currentLocale = Locale.getDefault()
+
     // Sort languages alphabetically by name
-    val sortedLanguages = remember(languages) {
-        languages.sortedBy { it.name }
+    val sortedLanguages = remember(languages, currentLocale) {
+        languages.sortedBy { lang ->
+            try {
+                //do generate the localized dispaly name in device language
+                Locale(lang.code).getDisplayLanguage(currentLocale)
+            } catch (e: Exception) {
+                lang.name //fall back
+            }
+        }
     }
 
-    val filteredLanguages = remember(searchQuery, sortedLanguages) {
+    val filteredLanguages = remember(searchQuery, sortedLanguages, currentLocale) {
         if (searchQuery.isEmpty()) {
             sortedLanguages
         } else {
-            sortedLanguages.filter {
-                it.name.contains(searchQuery, ignoreCase = true) ||
-                        it.nativeName?.contains(searchQuery, ignoreCase = true) == true
+            sortedLanguages.filter { language ->
+                val localizedName = try {
+                    Locale(language.code).getDisplayLanguage(currentLocale)
+                } catch (e: Exception) {
+                    language.name
+                }
+
+                language.name.contains(searchQuery, ignoreCase = true) ||
+                        language.nativeName?.contains(searchQuery, ignoreCase = true) == true ||
+                        localizedName.contains(searchQuery, ignoreCase = true)
             }
         }
     }
