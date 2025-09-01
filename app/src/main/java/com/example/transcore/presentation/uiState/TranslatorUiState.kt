@@ -6,7 +6,7 @@ import com.example.transcore.data.models.TranslationResult
 data class TranslatorUiState(
     val sourceText: String = "",
     val translatedText: String = "",
-    val sourceLanguage: Language = Language("auto", "Select Language", "Detect"),
+    val sourceLanguage: Language = Language("auto", "Select", "Detect"),
     val targetLanguage: Language = Language("en", "English", "English"),
     val availableLanguages: List<Language> = emptyList(),
     val isLoading: Boolean = false,

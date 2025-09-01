@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -61,7 +63,7 @@ fun LanguageBottomSheet(
         languages.sortedBy { lang ->
             try {
                 //do generate the localized dispaly name in device language
-                Locale(lang.code).getDisplayLanguage(currentLocale).replaceFirstChar {
+                Locale.forLanguageTag(lang.code).getDisplayLanguage(currentLocale).replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(currentLocale) else it.toString()
                 }
             } catch (e: Exception) {
@@ -76,7 +78,8 @@ fun LanguageBottomSheet(
         } else {
             sortedLanguages.filter { language ->
                 val localizedName = try {
-                    Locale(language.code).getDisplayLanguage(currentLocale).replaceFirstChar {
+
+                    Locale.forLanguageTag(language.code).getDisplayLanguage(currentLocale).replaceFirstChar {
                         if (it.isLowerCase()) it.titlecase(currentLocale) else it.toString()
                     }
                 } catch (e: Exception) {
@@ -104,7 +107,6 @@ fun LanguageBottomSheet(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = bottomSheetState,
-        //modifier = Modifier.fillMaxHeight(0.75f),
         shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
         containerColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onSurface,
@@ -120,6 +122,7 @@ fun LanguageBottomSheet(
     ) {
         Column(
             modifier = Modifier
+                .heightIn(max = 600.dp)
                 .fillMaxSize()
                 .padding(horizontal = 20.dp, vertical = 8.dp)
         ) {
