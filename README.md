@@ -62,7 +62,7 @@ app/src/main/java/com/example/transcore/
 Clone the repository:
 
 ```bash
-git clone https://github.com/<your-username>/TransCore.git
+git clone https://github.com/DevKorrir/TransCore-Kotlin.git
 cd TransCore
 ```
 
